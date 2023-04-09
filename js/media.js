@@ -7,12 +7,23 @@ $(function () {
     var iTransform, cTransform;
     var currentSongIndex = 0;
 
-    var songs = ['幸运星 - 牛奶咖啡.mp3', '慢慢喜欢你 - 莫文蔚.mp3', 'music.mp3'];
+    var songs = ['慢慢喜欢你 - 莫文蔚.mp3', '明天,你好 - 牛奶咖啡.mp3', '目及皆是你 - 小蓝背心.mp3', '幸运星 - 牛奶咖啡.mp3'];
     mediaObj = new Audio();
-    mediaObj.src = 'images/media/' + songs[currentSongIndex];  // 背景音乐修改这里
-    mediaObj.loop = true;
+    mediaObj.src = 'images/media/' + songs[currentSongIndex];
+    //mediaObj.loop = true;
     mediaObj.autoplay = true;
-    // window.mediaObj = mediaObj;
+    
+    function playSong() {
+        mediaObj.src = 'images/media/' + songs[currentSongIndex];
+        mediaObj.play();
+    }
+    
+    // 绑定播放结束事件，用于自动播放下一首歌曲
+    mediaObj.addEventListener('ended', function() {
+        // 切换到下一首歌曲
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        playSong();
+    });
 
     $(document).one('touchstart.play click.play', function () {
         mediaObj.play();
